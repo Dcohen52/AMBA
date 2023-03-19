@@ -15,6 +15,33 @@ In addition to its robust functionality, this class is also highly customizable 
 * **File export:** the class provide developers an easiy way to export their generated JavaScript code to a file, streamlining the process of integrating this code into their projects.
 * **Versatility:** this tool can be used for a variety of applications, from web development to building cross-platform applications - check out [tempt](https://github.com/Dcohen52/tempt) and [MVCactus](https://github.com/Dcohen52/MVCactus)
 
+## Getting started
+1. Clone the repository from GitHub using the following command:
+
+```git clone https://github.com/Dcohen52/AMBA.git```
+
+
+2. Navigate to the root directory of the cloned repository using the cd command:
+
+```cd AMBA```
+
+You're now ready to use the code in the repository! Refer to the documentation (coming soon) or README file for more information on how to use the code.
+
+### Example:
+```
+from AMBA import JavaScript
+
+with open('script.py', 'r') as file:    # python file as input
+    js_code = file.read()
+
+js_transpiler = JavaScript()    # create an instance of JavaScript()
+js = str(js_transpiler.translate(js_code))      # do the actual traspiling, using "js_transpiler.translate()"
+js_transpiler.export_js(js, 'script', path='web/')  # Export to you prefered path, this one is: "web/script.js" (code, file_name, path_upto_wanted_folder)
+
+# print(js) if you don't want to export to a file
+```
+
+
 ## PYPI
 The AMBA transpiler has yet to be added to PYPI, but I am currently working on expanding its capabilities. This includes adding support for new languages and making it more user-friendly for daily use.
 
