@@ -15,6 +15,9 @@ In addition to its robust functionality, this class is also highly customizable 
 * **File export:** the class provide developers an easiy way to export their generated JavaScript code to a file, streamlining the process of integrating this code into their projects.
 * **Versatility:** this tool can be used for a variety of applications, from web development to building cross-platform applications - check out [tempt](https://github.com/Dcohen52/tempt) and [MVCactus](https://github.com/Dcohen52/MVCactus)
 
+## PYPI
+The AMBA transpiler has yet to be added to PYPI, but I am currently working on expanding its capabilities. This includes adding support for new languages and making it more user-friendly for daily use.
+
 ## Contribute
 Contributions to this project are welcome and encouraged! If you find a bug, have an idea for a new feature, or would like to contribute code, please open an issue or submit a pull request on the GitHub repository.
 
