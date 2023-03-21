@@ -1,5 +1,6 @@
 import ast
 import io
+import re
 import sys
 
 
@@ -21,6 +22,11 @@ class JavaScript:
     License: MIT
     """
 
+    # Changelog:
+    #    Added support for:
+    #      document.querySelector("#element");
+    #      document.querySelector("#element").innerHTML = "content";
+    
     def __init__(self):
         self.indent_level = 0
 
@@ -308,6 +314,22 @@ class JavaScript:
         value = self.visit(node.value)
         attr = node.attr
         return f'{value}.{attr}'
+
+    def query_selector(self, code):
+        def replace_query_selector(match):
+            element_name = match.group(1)
+            return f"document.querySelector('{element_name}')"
+
+        code = re.sub(r'%dqs\{\'([^\']*)\'\}', replace_query_selector, code)
+
+        def replace_inner_html(match):
+            element_name = match.group(1)
+            content = match.group(2)
+            return f"document.querySelector('{element_name}').innerHTML = '{content}'"
+
+        code = re.sub(r'%innerHTML \{"([^"]+)"\}\{"([^"]+)"\}', replace_inner_html, code)
+
+        return code
 
     def visit_Raise(self, node):
         if node.exc:
