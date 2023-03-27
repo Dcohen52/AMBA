@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## 2023-03-27
 
 ### Added
-- Support for template literals in JavaScript.
+- Support for template literals in JavaScript and Python.
 
 ## 2023-03-23
 
