@@ -44,5 +44,4 @@ Initialy implemented features:
   - name constants.
   - None types.
 - The JavaScript class also provides support for attributes and generator expressions.
-- The `query_selector` method enables the replacement of `document.querySelector("#element");`, `document.querySelector("#element").innerHTML = "content"`;, and template literals.
 - The raise method handles exceptions effectively.
