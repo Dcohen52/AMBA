@@ -26,7 +26,8 @@ class JavaScript:
     #    Added support for:
     #      document.querySelector("#element");
     #      document.querySelector("#element").innerHTML = "content";
-    
+    #      Template literals
+
     def __init__(self):
         self.indent_level = 0
 
@@ -45,14 +46,16 @@ class JavaScript:
         return visitor(node)
 
     def generic_visit(self, node):
-        raise NotImplementedError(f'No visit_{type(node).__name__} method found')
+        raise NotImplementedError(
+            f'No visit_{type(node).__name__} method found')
 
     def visit_Module(self, node):
         for child in node.body:
             self.visit(child)
 
     def visit_FunctionDef(self, node):
-        self.emit(f'function {node.name}({", ".join([arg.arg for arg in node.args.args])}) {{')
+        self.emit(
+            f'function {node.name}({", ".join([arg.arg for arg in node.args.args])}) {{')
         self.indent()
         for child in node.body:
             self.visit(child)
@@ -145,7 +148,8 @@ class JavaScript:
         iter = self.visit(node.iter)
         if isinstance(node.iter, ast.Call) and isinstance(node.iter.func, ast.Name) and node.iter.func.id == 'range':
             if len(node.iter.args) == 1:
-                self.emit(f'for (let {target} = 0; {target} < {self.visit(node.iter.args[0])}; {target}++) {{')
+                self.emit(
+                    f'for (let {target} = 0; {target} < {self.visit(node.iter.args[0])}; {target}++) {{')
             elif len(node.iter.args) == 2:
                 self.emit(
                     f'for (let {target} = {self.visit(node.iter.args[0])}; {target} < {self.visit(node.iter.args[1])}; {target}++) {{')
@@ -158,10 +162,12 @@ class JavaScript:
                 f'for (let [{target}, {self.visit(node.target)}] of Object.entries({self.visit(node.iter.func.value)})) {{')
         elif isinstance(node.iter, ast.Call) and isinstance(node.iter.func,
                                                             ast.Attribute) and node.iter.func.attr == 'keys':
-            self.emit(f'for (let {target} of Object.keys({self.visit(node.iter.func.value)})) {{')
+            self.emit(
+                f'for (let {target} of Object.keys({self.visit(node.iter.func.value)})) {{')
         elif isinstance(node.iter, ast.Call) and isinstance(node.iter.func,
                                                             ast.Attribute) and node.iter.func.attr == 'values':
-            self.emit(f'for (let {target} of Object.values({self.visit(node.iter.func.value)})) {{')
+            self.emit(
+                f'for (let {target} of Object.values({self.visit(node.iter.func.value)})) {{')
         elif isinstance(node.iter, ast.Name) and node.iter.id == 'zip':
             targets = [self.visit(target) for target in node.target.elts]
             iters = [self.visit(iter) for iter in node.iter.elts]
@@ -271,6 +277,16 @@ class JavaScript:
                 output += f'.map(({", ".join(loop_vars)}) => {self.visit(if_clause)})'
         output += ')'
         return output
+    
+    def visit_JoinedStr(self, node):
+        values = [self.visit(child) for child in node.values]
+        return f"`{''.join(values)}`"
+    
+    def visit_FormattedValue(self, node):
+        value = self.visit(node.value)
+        conversion = node.conversion if node.conversion != -1 else ''
+        format_spec = node.format_spec if node.format_spec is not None else ''
+        return f"${{value}}{conversion}{format_spec}"
 
     def visit_Constant(self, node):
         if isinstance(node.value, str):
@@ -327,7 +343,8 @@ class JavaScript:
             content = match.group(2)
             return f"document.querySelector('{element_name}').innerHTML = '{content}'"
 
-        code = re.sub(r'%innerHTML \{"([^"]+)"\}\{"([^"]+)"\}', replace_inner_html, code)
+        code = re.sub(
+            r'%innerHTML \{"([^"]+)"\}\{"([^"]+)"\}', replace_inner_html, code)
 
         return code
 
