@@ -10,8 +10,8 @@ All notable changes to this project will be documented in this file.
 ## 2023-03-23
 
 ### Added
-- Support for the `document.querySelector` method added - use `%dqs("element_name")`.
-- Support for setting the `innerHTML` property of a selected element using `document.querySelector` - use `%innerHTML("element_name")("html_content")`.
+- Support for the `document.querySelector` method added - use `%dqs("element")`.
+- Support for setting the `innerHTML` property of a selected element using `document.querySelector` - use `%innerHTML("element")("html_content")`.
 
 
 ## 2023-03-19
