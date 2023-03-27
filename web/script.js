@@ -16,5 +16,5 @@ function fibonacci(n) {
     }
   }
 }
-console.log('Factorial of 5 is', factorial(5));
-console.log('10th Fibonacci number is', fibonacci(10));
+console.log(`'Factorial of 5 is '${value}`);
+console.log(`'10th Fibonacci number is '${value}`);

@@ -5,7 +5,7 @@ import sys
 
 
 class JavaScript:
-    """A transpiler that translates Python code to JavaScript.
+    """A transpiler that translates Python code to JavaScript (for now).
 
     The JavaScript class provides methods to convert Python code to JavaScript, supporting various syntaxes,
     including loops, conditionals, functions, and operations. It uses the Python ast module to parse the input code
@@ -13,9 +13,17 @@ class JavaScript:
 
     Example usage:
         js = JavaScript()
-        js_code = js.translate('for i in range(10):\n    print(i)')
+        js_code = js.translate(
+        'for i in range(10):
+            print(i)'
+        )
 
-        print(js_code)  # Output: 'for (let i = 0; i < 10; i++) {\n  console.log(i);\n}'
+        print(js_code)  
+        
+        # Output: 
+        'for (let i = 0; i < 10; i++) {
+              console.log(i);
+        }'
 
     The JavaScript class also includes a method to export the generated JavaScript code to a file.
 
@@ -344,7 +352,7 @@ class JavaScript:
             return f"document.querySelector('{element_name}').innerHTML = '{content}'"
 
         code = re.sub(
-            r'%innerHTML \{"([^"]+)"\}\{"([^"]+)"\}', replace_inner_html, code)
+            r'%innerHTML\{"([^"]+)"\}\{"([^"]+)"\}', replace_inner_html, code)
 
         return code
 
