@@ -14,8 +14,11 @@ def fibonacci(n):
         return fibonacci(n - 1) + fibonacci(n - 2)
 
 
-print("Factorial of 5 is", factorial(5))
-print("10th Fibonacci number is", fibonacci(10))
+try:
+    print("Factorial of 5 is", factorial(5))
+    print("10th Fibonacci number is", fibonacci(10))
+except RecursionError:
+    print("Recursion limit exceeded")
 
 # Template literals supported:
 #   print(f"Factorial of 5 is {factorial(5)}")

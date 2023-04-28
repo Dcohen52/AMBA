@@ -5,7 +5,7 @@ import sys
 
 
 class JavaScript:
-    """A transpiler that translates Python code to JavaScript (for now).
+    """A class that translates Python code to JavaScript.
 
     The JavaScript class provides methods to convert Python code to JavaScript, supporting various syntaxes,
     including loops, conditionals, functions, and operations. It uses the Python ast module to parse the input code
@@ -366,3 +366,74 @@ class JavaScript:
     def export_js(self, code, filename, path=''):
         with open(f"{path}{filename}.js", 'w') as file:
             file.write(str(code))
+
+    #####
+
+    def visit_Import(self, node):
+        for alias in node.names:
+            self.emit(f'const {alias.name} = require("{alias.name}");')
+
+    def visit_ImportFrom(self, node):
+        for alias in node.names:
+            self.emit(f'const {alias.name} = require("{node.module}.{alias.name}");')
+
+    def visit_With(self, node):
+        self.emit('with ({')
+        self.indent()
+        for item in node.items:
+            self.emit(f'{self.visit(item.context_expr)}: {self.visit(item.optional_vars)},')
+        self.dedent()
+        self.emit('}) {')
+        self.indent()
+        for child in node.body:
+            self.visit(child)
+        self.dedent()
+        self.emit('}')
+
+    def visit_Await(self, node):
+        self.emit('await ')
+        self.visit(node.value)
+
+    def visit_AsyncFunctionDef(self, node):
+        self.emit('async ')
+        self.visit_FunctionDef(node)
+
+    def visit_AsyncFor(self, node):
+        self.emit('for await ')
+        self.visit_For(node)
+
+    def visit_AsyncWith(self, node):
+        self.emit('await ')
+        self.visit_With(node)
+
+    def visit_Try(self, node):
+        self.emit('try {')
+        self.indent()
+        for child in node.body:
+            self.visit(child)
+        self.dedent()
+        self.emit('}')
+        for handler in node.handlers:
+            self.visit(handler)
+        if node.finalbody:
+            self.emit('finally {')
+            self.indent()
+            for child in node.finalbody:
+                self.visit(child)
+            self.dedent()
+            self.emit('}')
+
+    def visit_ExceptHandler(self, node):
+        self.emit('catch (')
+        if node.type:
+            self.visit(node.type)
+        self.emit(') {')
+        self.indent()
+        for child in node.body:
+            self.visit(child)
+        self.dedent()
+        self.emit('}')
+
+    def visit_Starred(self, node):
+        self.emit('...')
+        self.visit(node.value)
