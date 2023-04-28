@@ -14,6 +14,7 @@ In addition to its robust functionality, this class is also highly customizable 
 * **Easy integration:** the translate method takes in Python code as a string and returns the corresponding JavaScript code as a string, making it easy to integrate this tool into existing development workflows.
 * **File export:** the class provide developers an easiy way to export their generated JavaScript code to a file, streamlining the process of integrating this code into their projects.
 * **Versatility:** this tool can be used for a variety of applications, from web development to building cross-platform applications - check out [tempt](https://github.com/Dcohen52/tempt) and [MVCactus](https://github.com/Dcohen52/MVCactus)
+* **Enhanced feature support:** Now handles Python `import`, `with`, `await`, `async def`, `async for`, `async with`, `try`, `except`, and unpacking constructs, generating corresponding JavaScript code.
 
 ## Getting started
 1. Clone the repository from GitHub using the following command:
