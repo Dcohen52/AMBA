@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2023-04-28
+
+### Added
+- Added support for Python import statements, allowing conversion to JavaScript require statements.
+- Added support for Python with statement, enabling conversion to a JavaScript object with key-value pairs.
+- Introduced support for Python await and async def statements, generating corresponding JavaScript code.
+- Implemented handling of Python async for and async with constructs, generating appropriate JavaScript code.
+- Enhanced support for Python try, except, and * (unpacking) constructs, generating corresponding JavaScript code.
+
 ## 2023-03-27
 
 ### Added
