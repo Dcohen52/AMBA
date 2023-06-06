@@ -29,7 +29,7 @@ In addition to its robust functionality, this class is also highly customizable 
 You're now ready to use the code in the repository! Refer to the documentation (coming soon) or README file for more information on how to use the code.
 
 ### Example:
-```
+``` python
 from AMBA import JavaScript
 
 with open('script.py', 'r') as file:    # python file as input
